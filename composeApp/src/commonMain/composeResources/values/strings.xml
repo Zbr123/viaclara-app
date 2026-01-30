@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Viaclara</string>
+    <string name="welcome_back">Welcome Back</string>
+    <string name="videos_title">Videos</string>
+    <string name="filter_text">Filter</string>
+    <string name="verdict_heading">You\'re Younger</string>
+    <string name="verdict_text">Your body is performing better than your age.</string>
+    <string name="years_old">Years old</string>
+    <string name="bioage">Bioage</string>
+</resources>

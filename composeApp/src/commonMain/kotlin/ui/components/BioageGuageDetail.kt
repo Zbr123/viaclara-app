@@ -27,36 +27,46 @@ fun BioAgeGaugeDetail(
     recoveryProgress: Float,  // 0f..1f
     modifier: Modifier = Modifier
 ) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(220.dp)
-        ,
-        verticalAlignment = Alignment.CenterVertically
+    // Main container - centered on screen
+    Box(
+        modifier = modifier.fillMaxWidth(),
+        contentAlignment = Alignment.Center
     ) {
-        MetricGauge(
-            size = 100.dp,
-            progress = loadProgress,
-            valueColor = Color(0xFFFF6A00),
-            label = "Load",
-            dotColor = Color(0xFFFF6A00),
-            arcBrush = Brush.linearGradient(listOf(Color(0xFFFF4A1A), Color(0xFFFF7A00))),
-        )
+        Row(
+            modifier = Modifier
+                .wrapContentWidth()
+                .height(220.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            MetricGauge(
+                size = 100.dp,
+                progress = loadProgress,
+                valueColor = Color(0xFFFF6A00),
+                label = "Load",
+                dotColor = Color(0xFFFF6A00),
+                arcBrush = Brush.linearGradient(listOf(Color(0xFFFF4A1A), Color(0xFFFF7A00))),
+            )
 
-        BioAgeCenterGauge(
-            gaugeSize = 150.dp,
-            age = age,
-            label = "Bioage"
-        )
+            Spacer(modifier = Modifier.width(10.dp))
 
-        MetricGauge(
-            size = 100.dp,
-            progress = recoveryProgress,
-            valueColor = Color(0xFF9CFF7A),
-            label = "Recovery",
-            dotColor = Color(0xFF67FF66),
-            arcBrush = Brush.linearGradient(listOf(Color(0xFF45E65A), Color(0xFFA6FF5A))),
-        )
+            BioAgeCenterGauge(
+                gaugeSize = 150.dp,
+                age = age,
+                label = "Bioage"
+            )
+
+            Spacer(modifier = Modifier.width(10.dp))
+
+            MetricGauge(
+                size = 100.dp,
+                progress = recoveryProgress,
+                valueColor = Color(0xFF9CFF7A),
+                label = "Recovery",
+                dotColor = Color(0xFF67FF66),
+                arcBrush = Brush.linearGradient(listOf(Color(0xFF45E65A), Color(0xFFA6FF5A))),
+            )
+        }
     }
 }
 
@@ -119,6 +129,8 @@ private fun MetricGauge(
                 )
             }
         }
+
+//        Spacer(Modifier.height(10.dp))
 
         Row(verticalAlignment = Alignment.CenterVertically) {
             Box(

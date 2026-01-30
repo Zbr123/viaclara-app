@@ -12,24 +12,26 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.*
 import androidx.compose.material3.Text
 import org.jetbrains.compose.resources.painterResource
+import ui.theme.TextSecondary
 import viaclara.composeapp.generated.resources.*
 
 @Composable
 fun BioAgeGauge(
     age: Int,
     leftProgress: Float,   // 0f..1f
-    rightProgress: Float   // 0f..1f
+    rightProgress: Float,   // 0f..1f
+    modifier: Modifier = Modifier
 ) {
     Box(
         contentAlignment = Alignment.Center,
-        modifier = Modifier.size(300.dp).fillMaxSize(),
+        modifier = modifier.size(300.dp),
     ) {
         Box(
             modifier = Modifier.size(300.dp)
         ) {
             Image(
                 painterResource(Res.drawable.guage),
-                "background",
+                contentDescription = null,
                 modifier = Modifier.fillMaxSize()
             )
             Canvas(modifier = Modifier.fillMaxSize()) {
@@ -53,7 +55,6 @@ fun BioAgeGauge(
                 val leftBrush = Brush.linearGradient(listOf(Color(0xFFFF4815), Color(0xFFFF6804)))
                 val rightBrush = Brush.linearGradient(listOf(Color(0xFF4CAF50), Color(0xFF8BC34A)))
 
-                // same glow steps you liked
                 val glowSteps = listOf(
                     (strokeWidth + 18.dp.toPx()) to 0.10f,
                     (strokeWidth + 10.dp.toPx()) to 0.14f,
@@ -109,18 +110,18 @@ fun BioAgeGauge(
             Column(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.fillMaxWidth().fillMaxHeight()) {
+                modifier = Modifier.fillMaxSize()
+            ) {
                 Text(
                     text = age.toString(),
                     fontSize = 60.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White
                 )
-                Text("Years old", fontSize = 15.sp, color = Color(0xFF4F4F4F))
+                Text("Years old", fontSize = 15.sp, color = TextSecondary)
                 Spacer(Modifier.height(12.dp))
-                Text("Bioage", color = Color(0xFF4F4F4F))
+                Text("Bioage", color = TextSecondary)
             }
         }
-
     }
 }
