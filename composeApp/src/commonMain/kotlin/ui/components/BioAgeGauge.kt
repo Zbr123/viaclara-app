@@ -36,38 +36,78 @@ fun BioAgeGauge(
                 "background",
                 modifier = Modifier.fillMaxSize()
             )
-            Canvas(
-                modifier = Modifier.fillMaxSize()) {
+            Canvas(modifier = Modifier.fillMaxSize()) {
+
                 val strokeWidth = 28.dp.toPx()
-                val radius = size.minDimension / 2.6
+                val radius = size.minDimension / 2.6f
+
+                val arcSize = Size(radius * 2f, radius * 2f)
                 val topLeft = Offset(
-                    ((size.width - radius * 2) / 2).toFloat(),
-                    ((size.height - radius * 2) / 2).toFloat()
+                    (size.width - arcSize.width) / 2f,
+                    (size.height - arcSize.height) / 2f
                 )
 
-                drawArc(
-                    brush = Brush.linearGradient(
-                        listOf(Color(0xFFFF4815), Color(0xFFFF6804))
-                    ),
-                    startAngle = 135f,
-                    sweepAngle = 270f * leftProgress,
-                    useCenter = false,
-                    style = Stroke(strokeWidth, cap = StrokeCap.Round),
-                    size = Size((radius * 2).toFloat(), (radius * 2).toFloat()),
-                    topLeft = topLeft
+                val startBase = 135f
+                val sweepTotal = 270f
+
+                val leftSweep = sweepTotal * leftProgress.coerceIn(0f, 1f)
+                val rightSweep = sweepTotal * rightProgress.coerceIn(0f, 1f)
+                val rightStart = startBase + sweepTotal * (1f - rightProgress.coerceIn(0f, 1f))
+
+                val leftBrush = Brush.linearGradient(listOf(Color(0xFFFF4815), Color(0xFFFF6804)))
+                val rightBrush = Brush.linearGradient(listOf(Color(0xFF4CAF50), Color(0xFF8BC34A)))
+
+                // same glow steps you liked
+                val glowSteps = listOf(
+                    (strokeWidth + 18.dp.toPx()) to 0.10f,
+                    (strokeWidth + 10.dp.toPx()) to 0.14f,
+                    (strokeWidth + 4.dp.toPx())  to 0.18f,
                 )
 
-                drawArc(
-                    brush = Brush.linearGradient(
-                        listOf(Color(0xFF4CAF50), Color(0xFF8BC34A))
-                    ),
-                    startAngle = 135f + 270f * (1 - rightProgress),
-                    sweepAngle = 270f * rightProgress,
-                    useCenter = false,
-                    style = Stroke(strokeWidth, cap = StrokeCap.Round),
-                    size = Size((radius * 2).toFloat(), (radius * 2).toFloat()),
-                    topLeft = topLeft
-                )
+                fun drawGlowArc(brush: Brush, start: Float, sweep: Float) {
+                    if (sweep <= 0f) return
+                    glowSteps.forEach { (w, a) ->
+                        drawArc(
+                            brush = brush,
+                            startAngle = start,
+                            sweepAngle = sweep,
+                            useCenter = false,
+                            topLeft = topLeft,
+                            size = arcSize,
+                            alpha = a,
+                            style = Stroke(width = w, cap = StrokeCap.Round)
+                        )
+                    }
+                }
+
+                // ---- GLOW FIRST (behind) ----
+                drawGlowArc(leftBrush, startBase, leftSweep)
+                drawGlowArc(rightBrush, rightStart, rightSweep)
+
+                // ---- MAIN ARCS (front) ----
+                if (leftSweep > 0f) {
+                    drawArc(
+                        brush = leftBrush,
+                        startAngle = startBase,
+                        sweepAngle = leftSweep,
+                        useCenter = false,
+                        topLeft = topLeft,
+                        size = arcSize,
+                        style = Stroke(width = strokeWidth, cap = StrokeCap.Round)
+                    )
+                }
+
+                if (rightSweep > 0f) {
+                    drawArc(
+                        brush = rightBrush,
+                        startAngle = rightStart,
+                        sweepAngle = rightSweep,
+                        useCenter = false,
+                        topLeft = topLeft,
+                        size = arcSize,
+                        style = Stroke(width = strokeWidth, cap = StrokeCap.Round)
+                    )
+                }
             }
 
             Column(

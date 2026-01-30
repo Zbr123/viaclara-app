@@ -4,11 +4,13 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -26,17 +28,26 @@ fun BioAgeVerdict(
     verdictText: String = "Your body is performing better than your age."
 ){
     Box(
-        modifier = Modifier.width(320.dp)
+        modifier = Modifier
+            .fillMaxWidth()
+
     ) {
         Image(
             painter = painterResource(Res.drawable.ai_verdict),
             contentDescription = "background",
-            modifier = Modifier.width(320.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp),
             contentScale = ContentScale.FillWidth
         )
         Column(
             verticalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxWidth().padding(start = 60.dp, top = 11.dp)) {
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 10.dp, start =10.dp)
+                .padding(horizontal = 80.dp),
+            horizontalAlignment = Alignment.Start
+        ) {
             Text(
                 text = verdictHeading,
                 fontSize = 14.sp,

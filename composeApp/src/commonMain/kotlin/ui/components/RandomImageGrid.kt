@@ -43,76 +43,42 @@ fun buildRandomSpecs(
 
 private fun Float.lerp(a: Float, b: Float) = a + (b - a) * this
 
-
-//@OptIn(ExperimentalFoundationApi::class)
-//@Composable
-//fun RandomImageGrid(
-//    items: List<DrawableResource>, // your image URLs / IDs
-//    seed: Int = 2026
-//) {
-//    val specs = remember(items.size, seed) { buildRandomSpecs(items.size, seed) }
-//
-//    LazyVerticalGrid(
-//        columns = GridCells.Fixed(2),
-//        contentPadding = PaddingValues(16.dp),
-//        horizontalArrangement = Arrangement.spacedBy(12.dp),
-//        verticalArrangement = Arrangement.spacedBy(12.dp),
-//    ) {
-//        items(
-//            count = items.size,
-//            span = { index -> GridItemSpan(specs[index].span) }
-//        ) { index ->
-//            val spec = specs[index]
-//
-//            Box(
-//                Modifier
-//                    .fillMaxWidth()
-//                    .aspectRatio(spec.aspect)   // 핵: makes it tall/wide/normal
-//                    .clip(RoundedCornerShape(18.dp))
-//                    .background(Color(0xFF2A2A2A))
-//            ) {
-//                // put your image here (AsyncImage/Kamel/etc)
-//                Image(
-//                    painter = painterResource(items[index]),
-//                    contentDescription = null,
-//                )
-//            }
-//        }
-//    }
-//}
 @Composable
 fun RandomImageGrid(
     items: List<DrawableResource>,
-    seed: Int = 2026
+    seed: Int = 2026,
+    modifier: Modifier = Modifier
 ) {
     // We only need the aspect ratio for staggered flow;
     // span is less common in masonry but supported via 'FullLine'
     val specs = remember(items.size, seed) { buildRandomSpecs(items.size, seed) }
 
     LazyVerticalStaggeredGrid(
-        columns = StaggeredGridCells.Fixed(2),
-        contentPadding = PaddingValues(16.dp),
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
-        verticalItemSpacing = 12.dp, // Use this instead of verticalArrangement
-        modifier = Modifier.fillMaxSize()
+            columns = StaggeredGridCells.Fixed(2),
+            contentPadding = PaddingValues(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            verticalItemSpacing = 12.dp, // Use this instead of verticalArrangement
+            modifier = modifier
     ) {
-        itemsIndexed(items) { index, item ->
-            val spec = specs[index]
+            itemsIndexed(items) { index, item ->
+                val spec = specs[index]
 
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(spec.aspect)
-                    .clip(RoundedCornerShape(18.dp))
-                    .background(Color(0xFF2A2A2A))
-            ) {
-                Image(
-                    painter = painterResource(item),
-                    contentDescription = null,
-                    modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Crop // Ensures image fills the aspect ratio box
-                )
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight()
+                        .aspectRatio(spec.aspect)
+                        .clip(RoundedCornerShape(18.dp))
+                        .background(Color(0xFF2A2A2A))
+                ) {
+                    Image(
+                        painter = painterResource(item),
+                        contentDescription = null,
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Crop // Ensures image fills the aspect ratio box
+                    )
+                }
             }
         }
-    }
+
 }
