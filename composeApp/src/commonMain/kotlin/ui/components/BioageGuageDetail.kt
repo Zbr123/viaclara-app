@@ -37,17 +37,15 @@ fun BioAgeGaugeDetail(
             .fillMaxWidth()
             .height(220.dp)
         ,
-//        horizontalArrangement = Arrangement.SpaceAround,
         verticalAlignment = Alignment.CenterVertically
     ) {
         MetricGauge(
-            size = 80.dp,
+            size = 100.dp,
             progress = loadProgress,
             valueColor = Color(0xFFFF6A00),
             label = "Load",
             dotColor = Color(0xFFFF6A00),
             arcBrush = Brush.linearGradient(listOf(Color(0xFFFF4A1A), Color(0xFFFF7A00))),
-            value = loadProgress.toInt()
         )
 
         BioAgeCenterGauge(
@@ -63,7 +61,6 @@ fun BioAgeGaugeDetail(
             label = "Recovery",
             dotColor = Color(0xFF67FF66),
             arcBrush = Brush.linearGradient(listOf(Color(0xFF45E65A), Color(0xFFA6FF5A))),
-            value = recoveryProgress.toInt()
         )
     }
 }
@@ -71,7 +68,6 @@ fun BioAgeGaugeDetail(
 /** Left/Right gauge */
 @Composable
 private fun MetricGauge(
-    value: Int,
     size: Dp,
     progress: Float,
     arcBrush: Brush,
@@ -82,7 +78,7 @@ private fun MetricGauge(
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
-        modifier = Modifier.width(size + 20.dp)
+        modifier = Modifier.width(size)
     ) {
         Box(contentAlignment = Alignment.Center, modifier = Modifier.size(size)) {
             Image(
@@ -93,14 +89,12 @@ private fun MetricGauge(
 
             // right arc
             GaugeArc(
-                leftProgress = progress/2,
-                rightProgress = progress/2,
+                leftProgress = progress /2,
+                rightProgress = progress /2,
                 startAngle = -80f,
                 sweepTotal = 90f,
                 arcBrush = arcBrush,
-                trackColor = Color(0xFF2A2A2A),
                 stroke = 7.dp,
-                glow = true
             )
 
             // left arc
@@ -110,9 +104,7 @@ private fun MetricGauge(
                 startAngle = 170f,   // mirror of -80°
                 sweepTotal = 90f,
                 arcBrush = arcBrush,
-                trackColor = Color(0xFF2A2A2A),
                 stroke = 7.dp,
-                glow = true
             )
 
             val pct = (progress).roundToInt()
@@ -133,7 +125,7 @@ private fun MetricGauge(
             }
         }
 
-        Spacer(Modifier.height(10.dp))
+//        Spacer(Modifier.height(10.dp))
 
         Row(verticalAlignment = Alignment.CenterVertically) {
             Box(
@@ -215,9 +207,7 @@ private fun GaugeArc(
     startAngle: Float,
     sweepTotal: Float,
     arcBrush: Brush,
-    trackColor: Color,
     stroke: Dp,
-    glow: Boolean
 ) {
     Canvas(modifier = Modifier.fillMaxSize()) {
         val strokePx = stroke.toPx()
