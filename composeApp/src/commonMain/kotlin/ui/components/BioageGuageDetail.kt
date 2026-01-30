@@ -37,7 +37,7 @@ fun BioAgeGaugeDetail(
             .fillMaxWidth()
             .height(220.dp)
         ,
-        horizontalArrangement = Arrangement.SpaceAround,
+//        horizontalArrangement = Arrangement.SpaceAround,
         verticalAlignment = Alignment.CenterVertically
     ) {
         MetricGauge(
@@ -47,6 +47,7 @@ fun BioAgeGaugeDetail(
             label = "Load",
             dotColor = Color(0xFFFF6A00),
             arcBrush = Brush.linearGradient(listOf(Color(0xFFFF4A1A), Color(0xFFFF7A00))),
+            value = loadProgress.toInt()
         )
 
         BioAgeCenterGauge(
@@ -62,6 +63,7 @@ fun BioAgeGaugeDetail(
             label = "Recovery",
             dotColor = Color(0xFF67FF66),
             arcBrush = Brush.linearGradient(listOf(Color(0xFF45E65A), Color(0xFFA6FF5A))),
+            value = recoveryProgress.toInt()
         )
     }
 }
@@ -69,6 +71,7 @@ fun BioAgeGaugeDetail(
 /** Left/Right gauge */
 @Composable
 private fun MetricGauge(
+    value: Int,
     size: Dp,
     progress: Float,
     arcBrush: Brush,
@@ -87,10 +90,25 @@ private fun MetricGauge(
                 "background",
                 modifier = Modifier.fillMaxSize()
             )
+
+            // right arc
             GaugeArc(
-                progress = progress,
-                startAngle = 135f,
-                sweepTotal = 270f,
+                leftProgress = progress/2,
+                rightProgress = progress/2,
+                startAngle = -80f,
+                sweepTotal = 90f,
+                arcBrush = arcBrush,
+                trackColor = Color(0xFF2A2A2A),
+                stroke = 7.dp,
+                glow = true
+            )
+
+            // left arc
+            GaugeArc(
+                leftProgress = progress / 2,
+                rightProgress = progress / 2,
+                startAngle = 170f,   // mirror of -80°
+                sweepTotal = 90f,
                 arcBrush = arcBrush,
                 trackColor = Color(0xFF2A2A2A),
                 stroke = 7.dp,
@@ -110,7 +128,7 @@ private fun MetricGauge(
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     color = valueColor,
-                    modifier = Modifier.padding(bottom = 6.dp, start = 2.dp)
+                    modifier = Modifier.padding(start = 2.dp)
                 )
             }
         }
@@ -156,13 +174,13 @@ private fun BioAgeCenterGauge(
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(
                     text = age.toString(),
-                    fontSize = 58.sp,
+                    fontSize = 50.sp,
                     fontWeight = FontWeight.ExtraBold,
                     color = Color.White
                 )
                 Text(
                     text = "Years old",
-                    fontSize = 16.sp,
+                    fontSize = 12.sp,
                     color = Color(0xFF6B6B6B)
                 )
             }
@@ -192,7 +210,8 @@ private fun BioAgeCenterGauge(
  */
 @Composable
 private fun GaugeArc(
-    progress: Float,
+    leftProgress: Float,
+    rightProgress: Float,
     startAngle: Float,
     sweepTotal: Float,
     arcBrush: Brush,
@@ -202,34 +221,29 @@ private fun GaugeArc(
 ) {
     Canvas(modifier = Modifier.fillMaxSize()) {
         val strokePx = stroke.toPx()
-        val radius = (size.minDimension / 2f) - strokePx
+        val radius = (size.minDimension / 2.1f) - strokePx
         val arcSize = Size(radius * 2f, radius * 2f)
         val topLeft = Offset((size.width - arcSize.width) / 2f, (size.height - arcSize.height) / 2f)
 
-        // Track
-        drawArc(
-            color = trackColor,
-            startAngle = startAngle,
-            sweepAngle = sweepTotal,
-            useCenter = false,
-            topLeft = topLeft,
-            size = arcSize,
-            style = Stroke(width = strokePx, cap = StrokeCap.Round)
-        )
 
-        val sweep = sweepTotal * progress
+        val startBase = startAngle
 
-        // Glow (draw same arc a few times behind it)
-        if (glow && sweep > 0f) {
+        val leftSweep = sweepTotal * leftProgress.coerceIn(0f, 1f)
+        val rightSweep = sweepTotal * rightProgress.coerceIn(0f, 1f)
+        val rightStart = startBase + sweepTotal * (1f - rightProgress.coerceIn(0f, 1f))
+
+        // same glow steps you liked
             val glowSteps = listOf(
-                22.dp.toPx() to 0.10f,
-                18.dp.toPx() to 0.14f,
-                14.dp.toPx() to 0.18f,
+                12.dp.toPx() to 0.10f,
+                10.dp.toPx() to 0.14f,
             )
+
+        fun drawGlowArc(brush: Brush, start: Float, sweep: Float) {
+            if (sweep <= 0f) return
             glowSteps.forEach { (w, a) ->
                 drawArc(
-                    brush = arcBrush,
-                    startAngle = startAngle,
+                    brush = brush,
+                    startAngle = start,
                     sweepAngle = sweep,
                     useCenter = false,
                     topLeft = topLeft,
@@ -240,12 +254,28 @@ private fun GaugeArc(
             }
         }
 
-        // Main arc
-        if (sweep > 0f) {
+        // ---- GLOW FIRST (behind) ----
+        drawGlowArc(arcBrush, startBase, leftSweep)
+        drawGlowArc(arcBrush, rightStart, rightSweep)
+
+        // ---- MAIN ARCS (front) ----
+        if (leftSweep > 0f) {
             drawArc(
                 brush = arcBrush,
-                startAngle = startAngle,
-                sweepAngle = sweep,
+                startAngle = startBase,
+                sweepAngle = leftSweep,
+                useCenter = false,
+                topLeft = topLeft,
+                size = arcSize,
+                style = Stroke(width = strokePx, cap = StrokeCap.Round)
+            )
+        }
+
+        if (rightSweep > 0f) {
+            drawArc(
+                brush = arcBrush,
+                startAngle = rightStart,
+                sweepAngle = rightSweep,
                 useCenter = false,
                 topLeft = topLeft,
                 size = arcSize,

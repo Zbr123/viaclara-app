@@ -77,8 +77,9 @@ fun HomeScreen() {
                     settingsIcon = Res.drawable.icon_settings
                 )
             }
-
-            Spacer(modifier = Modifier.height(50.dp))
+            if(showContent){
+                Spacer(modifier = Modifier.height(50.dp))
+            }
 
             AnimatedVisibility(showContent) {
                 Box(
