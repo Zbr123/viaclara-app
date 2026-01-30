@@ -8,8 +8,6 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.*
 import androidx.compose.ui.graphics.*
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.*
 import org.jetbrains.compose.resources.DrawableResource
@@ -17,7 +15,6 @@ import sections.GaugeSection
 import sections.HeaderSection
 import sections.VerdictSection
 import sections.VideosSection
-import ui.components.*
 import viaclara.composeapp.generated.resources.*
 
 private const val DEFAULT_NAME = "John"
@@ -91,7 +88,10 @@ private fun HomeScreenContent(
         item {
             GaugeSection(
                 showGauge = showGauge,
-                onToggle = onToggleGauge
+                onToggle = onToggleGauge,
+                leftProgress = 0.46f,
+                age = 22,
+                rightProgress = 0.76f,
             )
         }
 

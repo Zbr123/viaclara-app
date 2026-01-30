@@ -130,8 +130,6 @@ private fun MetricGauge(
             }
         }
 
-//        Spacer(Modifier.height(10.dp))
-
         Row(verticalAlignment = Alignment.CenterVertically) {
             Box(
                 modifier = Modifier
@@ -141,7 +139,7 @@ private fun MetricGauge(
             Spacer(Modifier.width(8.dp))
             Text(
                 text = label,
-                fontSize = 18.sp,
+                fontSize = 16.sp,
                 fontWeight = FontWeight.SemiBold,
                 color = Color.White
             )
@@ -194,7 +192,7 @@ private fun BioAgeCenterGauge(
             Spacer(Modifier.width(8.dp))
             Text(
                 text = label,
-                fontSize = 18.sp,
+                fontSize = 16.sp,
                 fontWeight = FontWeight.SemiBold,
                 color = Color.White
             )

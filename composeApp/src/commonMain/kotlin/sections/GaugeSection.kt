@@ -11,6 +11,9 @@ import ui.components.BioAgeGaugeDetail
 
 @Composable
 fun GaugeSection(
+    age: Int,
+    leftProgress: Float,
+    rightProgress: Float,
     showGauge: Boolean,
     onToggle: () -> Unit,
     modifier: Modifier = Modifier
@@ -18,16 +21,16 @@ fun GaugeSection(
     Box(modifier = modifier.clickable(onClick = onToggle)) {
         AnimatedVisibility(visible = showGauge) {
             BioAgeGauge(
-                age = 22,
-                leftProgress = 0.46f,
-                rightProgress = 0.46f
+                age = age,
+                leftProgress = leftProgress/2,
+                rightProgress = rightProgress/2
             )
         }
         AnimatedVisibility(visible = !showGauge) {
             BioAgeGaugeDetail(
-                age = 22,
-                loadProgress = 76f,
-                recoveryProgress = 46f
+                age = age,
+                loadProgress = leftProgress*100,
+                recoveryProgress = rightProgress*100
             )
         }
     }

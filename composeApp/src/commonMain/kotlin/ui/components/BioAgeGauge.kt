@@ -1,25 +1,31 @@
 package ui.components
 
-import androidx.compose.foundation.*
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.*
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.*
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.material3.Text
 import org.jetbrains.compose.resources.painterResource
-import ui.theme.TextSecondary
-import viaclara.composeapp.generated.resources.*
+import viaclara.composeapp.generated.resources.Res
+import viaclara.composeapp.generated.resources.guage
 
+private const val LEFT_START = 260f
+private const val RIGHT_START = -80f
+private const val SWEEP_TOTAL = 90f
 @Composable
 fun BioAgeGauge(
     age: Int,
     leftProgress: Float,   // 0f..1f
-    rightProgress: Float,   // 0f..1f
+    rightProgress: Float,  // 0f..1f
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -45,12 +51,9 @@ fun BioAgeGauge(
                     (size.height - arcSize.height) / 2f
                 )
 
-                val startBase = 135f
-                val sweepTotal = 270f
-
-                val leftSweep = sweepTotal * leftProgress.coerceIn(0f, 1f)
-                val rightSweep = sweepTotal * rightProgress.coerceIn(0f, 1f)
-                val rightStart = startBase + sweepTotal * (1f - rightProgress.coerceIn(0f, 1f))
+                // Negating sweep for anticlockwise direction
+                val leftSweep = -(SWEEP_TOTAL * leftProgress.coerceIn(0f, 1f))-100 // anti-clockwise sweep
+                val rightSweep = SWEEP_TOTAL * rightProgress.coerceIn(0f, 1f)+100 // clockwise sweep
 
                 val leftBrush = Brush.linearGradient(listOf(Color(0xFFFF4815), Color(0xFFFF6804)))
                 val rightBrush = Brush.linearGradient(listOf(Color(0xFF4CAF50), Color(0xFF8BC34A)))
@@ -62,7 +65,7 @@ fun BioAgeGauge(
                 )
 
                 fun drawGlowArc(brush: Brush, start: Float, sweep: Float) {
-                    if (sweep <= 0f) return
+                    if (sweep == 0f) return
                     glowSteps.forEach { (w, a) ->
                         drawArc(
                             brush = brush,
@@ -78,14 +81,14 @@ fun BioAgeGauge(
                 }
 
                 // ---- GLOW FIRST (behind) ----
-                drawGlowArc(leftBrush, startBase, leftSweep)
-                drawGlowArc(rightBrush, rightStart, rightSweep)
+                drawGlowArc(leftBrush, LEFT_START, leftSweep)
+                drawGlowArc(rightBrush, RIGHT_START, rightSweep)
 
                 // ---- MAIN ARCS (front) ----
-                if (leftSweep > 0f) {
+                if (leftSweep != 0f) {
                     drawArc(
                         brush = leftBrush,
-                        startAngle = startBase,
+                        startAngle = LEFT_START,
                         sweepAngle = leftSweep,
                         useCenter = false,
                         topLeft = topLeft,
@@ -94,10 +97,10 @@ fun BioAgeGauge(
                     )
                 }
 
-                if (rightSweep > 0f) {
+                if (rightSweep != 0f) {
                     drawArc(
                         brush = rightBrush,
-                        startAngle = rightStart,
+                        startAngle = RIGHT_START,
                         sweepAngle = rightSweep,
                         useCenter = false,
                         topLeft = topLeft,
@@ -118,9 +121,9 @@ fun BioAgeGauge(
                     fontWeight = FontWeight.Bold,
                     color = Color.White
                 )
-                Text("Years old", fontSize = 15.sp, color = TextSecondary)
+                Text("Years old", fontSize = 15.sp, color = Color(0xFF4F4F4F))
                 Spacer(Modifier.height(12.dp))
-                Text("Bioage", color = TextSecondary)
+                Text("Bioage", color = Color(0xFF4F4F4F))
             }
         }
     }
