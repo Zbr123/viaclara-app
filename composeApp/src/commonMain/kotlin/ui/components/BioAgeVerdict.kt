@@ -18,6 +18,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.text.style.TextAlign
 import org.jetbrains.compose.resources.painterResource
 import viaclara.composeapp.generated.resources.Res
 import viaclara.composeapp.generated.resources.ai_verdict
@@ -29,7 +30,8 @@ fun BioAgeVerdict(
 ){
     Box(
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxWidth(),
+            contentAlignment = Alignment.CenterStart
 
     ) {
         Image(
@@ -37,30 +39,32 @@ fun BioAgeVerdict(
             contentDescription = "background",
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 20.dp),
+                .padding(horizontal = 22.dp),
             contentScale = ContentScale.FillWidth
         )
         Column(
             verticalArrangement = Arrangement.Center,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 10.dp, start =10.dp)
+                .padding(top = 6.dp, start =8.dp)
                 .padding(horizontal = 80.dp),
             horizontalAlignment = Alignment.Start
         ) {
             Text(
                 text = verdictHeading,
-                fontSize = 14.sp,
+                fontSize = 15.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color.White
+                color = Color.White,
+                textAlign = TextAlign.Start
             )
             Text(verdictText,
-                fontSize = 10.sp,
-                lineHeight = 10.sp,
-                fontWeight = FontWeight.Normal,
-                modifier = Modifier.width(220.dp),
+                fontSize = 11.sp,
+                lineHeight = 11.sp,
+                fontWeight = FontWeight.Medium,
+                modifier = Modifier.width(420.dp),
                 color = Color.Gray,
-                fontFamily = FontFamily.Default)
+                textAlign = TextAlign.Start,
+                fontFamily = FontFamily.SansSerif)
         }
     }
 }

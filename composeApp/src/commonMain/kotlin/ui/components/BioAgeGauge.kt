@@ -38,7 +38,7 @@ fun BioAgeGauge(
             )
             Canvas(modifier = Modifier.fillMaxSize()) {
 
-                val strokeWidth = 28.dp.toPx()
+                val strokeWidth = 20.dp.toPx()
                 val radius = size.minDimension / 2.6f
 
                 val arcSize = Size(radius * 2f, radius * 2f)
@@ -116,7 +116,7 @@ fun BioAgeGauge(
                 modifier = Modifier.fillMaxWidth().fillMaxHeight()) {
                 Text(
                     text = age.toString(),
-                    fontSize = 52.sp,
+                    fontSize = 60.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White
                 )

@@ -24,15 +24,9 @@ fun CalendarScreen() {
     ) {
         Spacer(modifier = Modifier.height(100.dp))
 
-        Text(
-            text = "📅",
-            fontSize = 80.sp
-        )
-
-        Spacer(modifier = Modifier.height(24.dp))
 
         Text(
-            text = "Calendar View",
+            text = "Insights View",
             color = Color.White,
             fontSize = 28.sp,
             fontWeight = FontWeight.Bold

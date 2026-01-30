@@ -25,13 +25,6 @@ fun ShareScreen() {
         Spacer(modifier = Modifier.height(100.dp))
 
         Text(
-            text = "🔗",
-            fontSize = 80.sp
-        )
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        Text(
             text = "Share & Connect",
             color = Color.White,
             fontSize = 28.sp,

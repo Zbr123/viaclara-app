@@ -1,5 +1,4 @@
 package com.example.viaclara.ui.components
-
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
@@ -23,12 +22,6 @@ import androidx.compose.ui.unit.sp
 import com.example.viaclara.navigation.TabItem
 import org.jetbrains.compose.resources.painterResource
 
-/**
- * Individual Bottom Navigation Item Component
- *
- * FIXED: Using Image with ColorFilter instead of Icon with tint
- * This ensures compatibility with Material3 and PNG resources
- */
 @Composable
 fun BottomNavItem(
     tab: TabItem,
@@ -36,10 +29,10 @@ fun BottomNavItem(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    // Background color animation
+// Background color animation
     val backgroundColor by animateColorAsState(
         targetValue = if (isSelected) {
-            Color(0xFF4CAF50).copy(alpha = 0.2f)
+            Color(0xFF87E64C).copy(alpha = 0.2f)
         } else {
             Color.Transparent
         },
@@ -50,10 +43,10 @@ fun BottomNavItem(
         label = "background_color"
     )
 
-    // Icon color animation
+// Icon color animation
     val iconColor by animateColorAsState(
         targetValue = if (isSelected) {
-            Color(0xFF4CAF50)
+            Color(0xFF87E64C)
         } else {
             Color(0xFF757575)
         },
@@ -63,7 +56,7 @@ fun BottomNavItem(
 
     Row(
         modifier = modifier
-            .clip(RoundedCornerShape(24.dp))
+            .clip(RoundedCornerShape(17.dp))
             .background(backgroundColor)
             .clickable(
                 onClick = onClick,
@@ -71,21 +64,21 @@ fun BottomNavItem(
                 interactionSource = remember { MutableInteractionSource() }
             )
             .padding(
-                horizontal = if (isSelected) 16.dp else 12.dp,
+                horizontal = if (isSelected) 12.dp else 8.dp,
                 vertical = 12.dp
             ),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ) {
-        // ICON - Using Image with ColorFilter for PNG compatibility
+// ICON - Using Image with ColorFilter for PNG compatibility
         Image(
             painter = painterResource(tab.icon),
             contentDescription = tab.label,
             colorFilter = ColorFilter.tint(iconColor),
-            modifier = Modifier.size(24.dp)
+            modifier = Modifier.size(22.dp)
         )
 
-        // LABEL - Animated visibility
+// LABEL - Animated visibility
         AnimatedVisibility(
             visible = isSelected,
             enter = fadeIn(animationSpec = tween(300)) +
@@ -95,10 +88,10 @@ fun BottomNavItem(
         ) {
             Text(
                 text = tab.label,
-                color = Color(0xFF4CAF50),
-                fontSize = 14.sp,
+                color = Color(0xFF87E64C),
+                fontSize = 15.sp,
                 fontWeight = FontWeight.Medium,
-                modifier = Modifier.padding(start = 8.dp)
+                modifier = Modifier.padding(start = 9.dp)
             )
         }
     }

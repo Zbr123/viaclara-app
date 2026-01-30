@@ -19,7 +19,7 @@ sealed class TabItem(
     )
 
     object Calendar : TabItem(
-        label = "Calendar",
+        label = "Insights",
         icon = Res.drawable.calendar
     )
 

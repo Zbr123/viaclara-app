@@ -1,14 +1,3 @@
-//package com.example.viaclara
-//import androidx.compose.runtime.*
-//import androidx.compose.ui.tooling.preview.Preview
-//import screens.HomeScreen
-//
-//@Composable
-//@Preview
-//fun App() {
-//    HomeScreen()
-//}
-
 package com.example.viaclara
 
 import androidx.compose.foundation.background
@@ -32,7 +21,8 @@ fun App() {
     // Initialize with Home tab - using object reference directly
     var selectedTab by remember { mutableStateOf<TabItem>(TabItem.Home) }
 
-    Column(
+    // Root Box - allows content to be overlaid
+    Box(
         modifier = Modifier
             .fillMaxSize()
             .background(
@@ -42,14 +32,11 @@ fun App() {
                         Color(0xFF1E1E1E)
                     ),
                 )
-            ),
-        horizontalAlignment = Alignment.CenterHorizontally
+            )
     ) {
-        // Dynamic content based on selected tab
+        // Main screen content - fills entire screen
         Box(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxWidth()
+            modifier = Modifier.fillMaxSize()
         ) {
             when (selectedTab) {
                 TabItem.Home -> HomeScreen()
@@ -59,13 +46,15 @@ fun App() {
             }
         }
 
-        // Bottom Navigation Bar
+        // Bottom Navigation Bar - floats on top of content
         BottomNavBar(
             selectedTab = selectedTab,
             onTabSelected = { tab ->
                 selectedTab = tab
             },
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp)
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(horizontal = 16.dp, vertical = 16.dp)
         )
     }
 }
