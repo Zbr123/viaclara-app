@@ -9,15 +9,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.*
+import androidx.compose.ui.draw.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.unit.*
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 
@@ -52,15 +49,15 @@ fun WelcomeHeader(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .height(80.dp)              // Hug height from Figma: 80px
+            .height(80.dp)
             .shadow(
                 elevation = 0.dp,
                 shape = RoundedCornerShape(16.dp),
                 clip = false
             )
             .background(
-                color = Color(0xFFFFFFF),  // Background: #2D2C31
-                shape = RoundedCornerShape(16.dp)  // Radius: 16dp
+                color = Color(0xFFFFFFF),
+                shape = RoundedCornerShape(16.dp)
             )
             .padding(20.dp),             // Padding: 8dp from Figma
         verticalAlignment = Alignment.CenterVertically,
@@ -294,7 +291,6 @@ fun WelcomeHeaderCustom(
     avatarImage: DrawableResource? = null,
     settingsIcon: DrawableResource? = null,
     backgroundColor: Color = FigmaColors.Background,
-//    accentColor: Color = FigmaColors.AvatarGreen,
     textColor: Color = FigmaColors.TextPrimary,
     secondaryTextColor: Color = FigmaColors.TextSecondary,
     onSettingsClick: () -> Unit = {},

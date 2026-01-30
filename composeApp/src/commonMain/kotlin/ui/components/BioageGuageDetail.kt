@@ -7,8 +7,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
+import androidx.compose.ui.*
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
@@ -16,13 +15,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.unit.*
 import org.jetbrains.compose.resources.painterResource
-import viaclara.composeapp.generated.resources.Res
-import viaclara.composeapp.generated.resources.guage
-import viaclara.composeapp.generated.resources.guage_mini
+import viaclara.composeapp.generated.resources.*
 import kotlin.math.roundToInt
 
 @Composable
@@ -124,8 +119,6 @@ private fun MetricGauge(
                 )
             }
         }
-
-//        Spacer(Modifier.height(10.dp))
 
         Row(verticalAlignment = Alignment.CenterVertically) {
             Box(
