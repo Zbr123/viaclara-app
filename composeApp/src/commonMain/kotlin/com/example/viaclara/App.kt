@@ -11,9 +11,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.viaclara.ui.components.BottomNavBar
 import com.example.viaclara.navigation.TabItem
-import screens.CalendarScreen
-import screens.HomeScreen
-import screens.ShareScreen
+import screens.dashboard.CalendarScreen
+import screens.dashboard.HomeScreen
+import screens.dashboard.ShareScreen
 
 @Composable
 @Preview

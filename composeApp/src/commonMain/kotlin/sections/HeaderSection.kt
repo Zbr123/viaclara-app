@@ -8,7 +8,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.DrawableResource
 import ui.components.WelcomeHeader
-import viaclara.composeapp.generated.resources.*
 
 @Composable
 fun HeaderSection(

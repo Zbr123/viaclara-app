@@ -1,4 +1,4 @@
-package screens
+package screens.dashboard
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
